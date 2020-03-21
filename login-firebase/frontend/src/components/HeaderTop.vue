@@ -15,6 +15,11 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
   export default {
+    created() {
+      firebase.auth().onAuthStateChanged( user => {
+        this.loggin = !user;
+      })
+    },
     data(){
       return {
         loggin : false
@@ -23,7 +28,7 @@ import 'firebase/auth';
     methods: {
      async handleSignout() {
        try{
-        const data = await firebase.auth.signOut();
+        const data = await firebase.auth().signOut();
         console.log(data)
         this.$router.replace({name: "Login"})
        }catch(err) {
